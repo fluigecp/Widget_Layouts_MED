@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Atendimento Fisiologia</title>
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/css/historico.css">
+
+	<link rel="icon" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/images/Esporte_Clube_Pinheiros.ico" type="image/gif" sizes="16x16">
+</head>
+
+<body>
+	<div class="container-fluid">
+		<header>
+			<img src="http://ecp.fluigcloud.com.br/portal/resources/images/1/logo_image.png">
+		</header>
+		<section class="dadosAtendimento">
+			{{#header}}
+			<strong class="data">Data de registro</strong>
+			<div>{{{dataAtendimento}}}</div>
+
+			<strong class="nomeProficional">Profissional</strong>
+			<div>{{{nome}}}</div>
+			{{/header}}
+		</section>
+		{{#atleta}}
+		<section class="historicoContainer">
+			<div class="historicoTopo">
+				<h3>Informações do Atleta</h3>
+			</div>
+			<div class="historicoCorpo">
+				<strong>Nome</strong>
+				<div>{{{nome}}}</div>
+
+				<strong>Matrícula</strong>
+				<div>{{{matricula}}}</div>
+
+				<strong>Modalidade</strong>
+				<div>{{{modalidade}}}</div>
+
+				<strong>Categoria</strong>
+				<div>{{{categoria}}}</div>
+
+				<strong>Atelta compareceu?</strong>
+				<div>{{{comparecimento}}}</div>
+
+				{{#justificativa}}
+				<strong>Justificou?</strong>
+				<div>{{{justificativa}}}</div>
+
+				{{/justificativa}} {{#descricaoJustificativa}}
+				<strong>Descrição</strong>
+				<div>{{{descricaoJustificativa}}}</div>
+
+				{{/descricaoJustificativa}}
+				<strong>Atendimento fora de horário?</strong>
+				<div>{{{horaAtendimento}}}</div>
+
+			</div>
+		</section>
+		{{/atleta}} {{#atendimento}}
+		<section class="historicoContainer">
+			<div class="historicoTopo">
+				<h3>Atendimento</h3>
+			</div>
+			<div class="historicoCorpo">
+				{{#infeccao}}
+				<h4>Infecção de vias aéreas superiores</h4>
+				<div class="col-md-6">
+					<strong>Causa</strong>
+					<div>{{{causa}}}</div>
+				</div>
+				<div class="col-md-6">
+					<strong>Local</strong>
+					<div>{{{local}}}</div>
+				</div>
+				{{/infeccao}} {{#gastro}}
+				<h4>Gastroenterocolite</h4>
+				<strong>Causa</strong>
+				<div>{{{causa}}}</div>
+
+				<strong>CID</strong>
+				<div>{{{cid}}}</div>
+
+				<strong>Diagnóstico</strong>
+				<div>{{{diagnostico}}}</div>
+				{{/gastro}} {{#tratamento}}
+				<h4>Tratamento</h4>
+				<strong>Medicamento</strong>
+				<div>{{{medicamento}}}</div>
+
+				<strong>Descrição do tratamento</strong>
+				<div>{{{descricao}}}</div>
+
+				<strong>Suplementação</strong>
+				<div>{{{suplementacao}}}</div>
+
+				{{#descricaoSuplemento}}
+				<strong>Descrever suplementação</strong>
+				<div>{{{descricaoSuplemento}}}</div>
+				{{/descricaoSuplemento}}
+
+				<strong>Resumo da consulta</strong>
+				<div>{{{resumoConsulta}}}</div>
+				{{/tratamento}} {{#afastamento}}
+				<h4>Afastamento</h4>
+				<strong>Será afastado?</strong>
+				<div>{{{afastamento}}}</div>
+
+				{{#tipoAfastamento}}
+				<strong>Tipo de afastamento</strong>
+				<div>{{{tipoAfastamento}}}</div>
+				{{/tipoAfastamento}} {{#periodoAfastamento}}
+				<strong>Periodo de afastamento</strong>
+				<div>{{{qtd}}} {{{periodo}}}</div>
+				{{/periodoAfastamento}} {{/afastamento}}
+
+			</div>
+		</section>
+		{{/atendimento}} {{^atendimento}}{{/atendimento}} {{#evolucao}}
+		<section class="historicoContainer">
+			<div class="historicoTopo">
+				<h3>Evolução</h3>
+			</div>
+			<div class="historicoCorpo">
+				<div>{{{evolucao}}}</div>
+			</div>
+		</section>
+		{{/evolucao}} {{^evolucao}}{{/evolucao}} {{#atestado}}
+		<section class="historicoContainer">
+			<div class="historicoTopo">
+				<h3>Atestado</h3>
+			</div>
+			<div class="historicoCorpo">
+				<strong>Tipo de atestado</strong>
+				<div>{{{tipo}}}</div>
+
+				<strong>Observações</strong>
+				<div>{{{observacoes}}}</div>
+			</div>
+		</section>
+		{{/atestado}} {{^atestado}}{{/atestado}} {{#exames}}
+		<section class="historicoContainer">
+			<div class="historicoTopo">
+				<h3>Exames</h3>
+			</div>
+			<div class="historicoCorpo">
+				<strong>Tipo de exame solicitado / realizado</strong>
+				<div>{{{tipoExame}}}</div>
+
+				{{#eletro}}
+				<strong>Avaliação do eletrocardiograma</strong>
+				<div>{{{eletro}}}</div>
+				{{/eletro}} {{#sangue}}
+				<h4>Exame de Sangue</h4>
+				<div class="col-md-4">
+					<strong>Testosterona total</strong>
+					<div>{{{testosteronaTotal}}}</div>
+				</div>
+				<div class="col-md-4">
+					<strong>Testosterona livre</strong>
+					<div>{{{testosteronaLivre}}}</div>
+				</div>
+				<div class="col-md-4">
+					<strong>Cortisol</strong>
+					<div>{{{cortisol}}}</div>
+				</div>
+				<div class="col-md-4">
+					<strong>CPK</strong>
+					<div>{{{cpk}}}</div>
+				</div>
+				<div class="col-md-4">
+					<strong>Uréia</strong>
+					<div>{{{ureia}}}</div>
+				</div>
+				<div class="col-md-4">
+					<strong>Creatina</strong>
+					<div>{{{creatina}}}</div>
+				</div>
+				{{/sangue}} {{#ergometrico}}
+				<h4>Teste Ergométrico</h4>
+				<div class="col-md-3">
+					<strong>Peso</strong>
+					<div>{{{peso}}}</div>
+				</div>
+				<div class="col-md-3">
+					<strong>Altura</strong>
+					<div>{{{altura}}}</div>
+				</div>
+				<div class="col-md-3">
+					<strong>Exame fisico</strong>
+					<div>{{{exameFisico}}}</div>
+				</div>
+				<div class="col-md-3">
+					<strong>Frequência cardíaca de treino</strong>
+					<div>{{{frequencia}}}</div>
+				</div>
+				<div class="col-md-4">
+					<strong>Velocidade - Km/h</strong>
+					<div>{{{velocidade}}}</div>
+				</div>
+				<div class="col-md-4">
+					<strong>Frequência cardíaca máxima</strong>
+					<div>{{{fcm}}}</div>
+				</div>
+				<div class="col-md-4">
+					<strong>Volume de oxigênio máximo</strong>
+					<div>{{{vol}}}</div>
+				</div>
+				{{/ergometrico}}
+			</div>
+		</section>
+	</div>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+
+</html>

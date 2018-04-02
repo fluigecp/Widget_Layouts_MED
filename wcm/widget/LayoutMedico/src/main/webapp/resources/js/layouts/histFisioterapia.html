@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Histórico da Fisioterapia</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/css/historico.css">
+
+    <link rel="icon" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/images/Esporte_Clube_Pinheiros.ico" type="image/gif" sizes="16x16">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <header>
+            <img src="http://ecp.fluigcloud.com.br/portal/resources/images/1/logo_image.png">
+        </header>
+        <section class="dadosAtendimento">
+            {{#header}}
+            <strong class="data">Data de registro</strong>
+            <div>{{{dataAtendimento}}}</div>
+
+            <strong class="nomeProficional">Profissional</strong>
+            <div>{{{nome}}}</div>
+            {{/header}}
+        </section>
+        {{#atleta}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Informações do Atleta</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Nome</strong>
+                <div>{{{nome}}}</div>
+
+                <strong>Matrícula</strong>
+                <div>{{{matricula}}}</div>
+
+                <strong>Modalidade</strong>
+                <div>{{{modalidade}}}</div>
+
+                <strong>Categoria</strong>
+                <div>{{{categoria}}}</div>
+
+                {{#piramide}}
+                <strong>Pirâmide</strong>
+                <div>{{{piramide}}}</div>
+                {{/piramide}}
+
+                <strong>Atleta compareceu?</strong>
+                <div>{{{comparecimento}}}</div>
+
+                {{#justificativa}}
+                <strong>Justificou?</strong>
+                <div>{{{justificativa}}}</div>
+
+                {{/justificativa}} {{#descricaoJustificativa}}
+                <strong>Descrição</strong>
+                <div>{{{descricaoJustificativa}}}</div>
+
+                {{/descricaoJustificativa}}
+                <strong>Atendimento fora de horário?</strong>
+                <div>{{{horaAtendimento}}}</div>
+
+            </div>
+        </section>
+        {{/atleta}} {{#avaliacao}}
+        <section class="historicoContainer" id="avaliacao">
+            <div class="historicoTopo">
+                <h3>Avaliação</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Data do início dos sintomas</strong>
+                <div>{{{data}}}</div>
+
+                <strong>Como começou a sentir?</strong>
+                <div>{{{sintomas}}}</div>
+
+                <strong>Local que estava quando começou o sintoma?</strong>
+                <div>{{{local}}}</div>
+
+                {{#especificar}}
+                <strong>Especificar</strong>
+                <div>{{especificar}}</div>
+                {{/especificar}}
+
+                <strong>Avaliação</strong>
+                <div>{{avaliacao}}</div>
+
+                <strong>Segmentos</strong>
+                <div>{{{avSegmento_}}}</div>
+
+                <strong>Lados</strong>
+                <div>{{{avLado_}}}</div>
+
+                <strong>Estruturas</strong>
+                <div>{{{avEstrutura_}}}</div>
+
+                <strong>Características</strong>
+                <div>{{{caracteristica}}}</div>
+
+                <strong>Lesões</strong>
+                <div>{{{avLesao_}}}</div>
+
+                <strong>Fases</strong>
+                <div>{{{avFase_}}}</div>
+
+                <strong>Causas</strong>
+                <div>{{{avCausa_}}}</div>
+
+                {{#avaliacao}}
+                <strong>Especificar</strong>
+                <div>{{avaliacao}}</div>
+                {{/avaliacao}}
+
+                <strong>Está afastado?</strong>
+                <div>{{afastado}}</div>
+
+                {{#tipoAfastado}}
+                <strong>Tipo do afastamento</strong>
+                <div>{{tpAfastamento}}</div>
+                {{/tipoAfastado}} {{#obs}}
+                <strong>Observações</strong>
+                <div>{{{obs}}}</div>
+                {{/obs}}
+            </div>
+        </section>
+        {{/avaliacao}} {{^avaliacao}}{{/avaliacao}} {{#evolucao}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Evolução</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Método de tratamento</strong>
+                <div>{{{metodo}}}</div>
+
+                {{#materiais}}
+                <strong>Materiais</strong>
+                <div>{{{materiais}}}</div>
+                {{/materiais}}
+
+                <strong>Conduta</strong>
+                <div>{{{conduta}}}</div>
+
+            </div>
+        </section>
+        {{/evolucao}} {{^evolucao}}{{/evolucao}} {{#recuperacao}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Recuperação</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Momento</strong>
+                <div>{{{tratamento}}}</div>
+
+                {{#especifique}}
+                <strong>Especificar momento</strong>
+                <div>{{{especifique}}}</div>
+                {{/especifique}}
+
+                <strong>Local onde foi realizado o atendimento</strong>
+                <div>{{{local}}}</div>
+
+                <strong>Condutas</strong>
+                <div>{{{condutas}}}</div>
+                {{#obs}}
+                <strong>Observações</strong>
+                <div>{{{obs}}}</div>
+                {{/obs}}
+
+            </div>
+        </section>
+        {{/recuperacao}} {{^recuperacao}}{{/recuperacao}} {{#prevencao}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Prevenção</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Tipo</strong>
+                <div>{{{tipo}}}</div>
+
+                {{#segmento}}
+                <strong>Segmento</strong>
+                <div>{{{segmento}}}</div>
+                {{/segmento}} {{#lado}}
+                <strong>Lado</strong>
+                <div>{{{lado}}}</div>
+                {{/lado}} {{#obs}}
+                <strong>Observações</strong>
+                <div>{{{obs}}}</div>
+                {{/obs}}
+
+            </div>
+        </section>
+        {{/prevencao}} {{^prevencao}}{{/prevencao}} {{#emergencia}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Emergência</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Descrição do ocorrido</strong>
+                <div>{{{descricao}}}</div>
+
+                <strong>Local onde foi realizado o atendimento</strong>
+                <div>{{{local}}}</div>
+                {{#obs}}
+                <strong>Observações</strong>
+                <div>{{{obs}}}</div>
+                {{/obs}}
+
+            </div>
+        </section>
+        {{/emergencia}} {{^emergencia}}{{/emergencia}} {{#bandagem}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Bandagem</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Tipo de bandagem</strong>
+                <div>{{{tipo}}}</div>
+
+                <strong>Materiais</strong>
+                <div>{{{materiais}}}</div>
+
+                <strong>Local onde foi realizado o atendimento</strong>
+                <div>{{{local}}}</div>
+                {{#obs}}
+                <strong>Observações</strong>
+                <div>{{{obs}}}</div>
+                {{/obs}}
+
+            </div>
+        </section>
+        {{/bandagem}} {{^bandagem}}{{/bandagem}} {{#competicao}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Competição</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Nome da competição</strong>
+                <div>{{{nomeCompeticao}}}</div>
+
+                <strong>Local da competição</strong>
+                <div>{{{local}}}</div>
+
+                {{#justifica}}
+                <strong>Especifique o local</strong>
+                <div>{{{justifica}}}</div>
+                {{/justifica}}
+
+                <strong>Tipo de atendimento</strong>
+                <div>{{{tipoAtendimento}}}</div>
+                
+                {{#obs}}
+                <strong>Observações</strong>
+                <div>{{{obs}}}</div>
+                {{/obs}}
+
+            </div>
+        </section>
+        {{/competicao}} {{^competicao}}{{/competicao}} {{#observacoes}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Orientações / Observações</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Orientações / Observações</strong>
+                <div>{{{obsAlta}}}</div>
+
+                <strong>Retorno solicitado</strong>
+                <div>{{{retorno}}}</div>
+
+                {{#obsRetorno}}
+                <strong>Observações solicitação de retorno</strong>
+                <div>{{{obsRetorno}}}</div>
+                {{/obsRetorno}}
+            </div>
+        </section>
+        {{/observacoes}} {{^observacoes}}{{/observacoes}}
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Atendimento Nutrição</title>
+	<!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/css/historico.css">
+
+    <link rel="icon" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/images/Esporte_Clube_Pinheiros.ico" type="image/gif" sizes="16x16">
+</head>
+<body>
+	<div class="container-fluid">
+		<header>
+            <img src="http://ecp.fluigcloud.com.br/portal/resources/images/1/logo_image.png">
+        </header>
+        <section class="dadosAtendimento">
+            {{#header}}
+            <strong class="data">Data de registro</strong>
+            <div>{{{dataAtendimento}}}</div>
+
+            <strong class="nomeProficional">Profissional</strong>
+            <div>{{{nome}}}</div>
+            {{/header}}
+        </section>
+        {{#atleta}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Informações do Atleta</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Nome</strong>
+                <div>{{{nome}}}</div>
+
+                <strong>Matrícula</strong>
+                <div>{{{matricula}}}</div>
+
+                <strong>Modalidade</strong>
+                <div>{{{modalidade}}}</div>
+
+                <strong>Categoria</strong>
+                <div>{{{categoria}}}</div>
+
+                <strong>Atleta compareceu?</strong>
+                <div>{{{comparecimento}}}</div>
+
+                {{#justificativa}}
+                <strong>Justificou?</strong>
+                <div>{{{justificativa}}}</div>
+
+                {{/justificativa}} {{#descricaoJustificativa}}
+                <strong>Descrição</strong>
+                <div>{{{descricaoJustificativa}}}</div>
+
+                {{/descricaoJustificativa}}
+
+            </div>
+        </section>
+        {{/atleta}} {{#dadosAtendimento}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Dados do Atendimento</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Está fazendo suplementação?</strong>
+                <div>{{{suplementacao}}}</div>
+
+                {{#descricaoSuplementacao}}
+                <strong>Descrever suplementação</strong>
+                <div>{{{descricaoSuplementacao}}}</div>
+                {{/descricaoSuplementacao}}
+
+                {{#hidratacao}}
+                <strong>Como está a hidratação?</strong>
+                <div>{{{hidratacao}}}</div>
+                {{/hidratacao}}
+
+                {{#comoEstaOsono}}
+                <strong>Como está o sono?</strong>
+                <div>{{{comoEstaOsono}}}</div>
+                {{/comoEstaOsono}}
+
+                {{#metodo}}
+                <strong>Método</strong>
+                <div>{{{metodo}}}</div>
+                {{/metodo}}
+
+                {{#condutaDietoterapica}}
+                <strong>Conduta dietororápica</strong>
+                <div>{{{condutaDietoterapica}}}</div>
+                {{/condutaDietoterapica}}
+
+                {{#observacoes}}
+                <strong>Observações</strong>
+                <div>{{{observacoes}}}</div>
+                {{/observacoes}}
+
+            </div>
+        </section>
+        {{/dadosAtendimento}} {{^dadosAtendimento}}{{/dadosAtendimento}}
+        {{#alimentacao}}
+        <section class="historicoContainer">
+          <div class="historicoTopo">
+            <h3>Alimentação</h3>
+          </div>
+          <div class="historicoCorpo">
+            <strong>Café da Manhã</strong>
+            <div>{{{cafeDaManha}}}</div>
+
+            <strong>Lanche da Manhã</strong>
+            <div>{{{lancheDaManha}}}</div>
+
+            <strong>Almoço</strong>
+            <div>{{{almoco}}}</div>
+
+            <strong>Lanche da Tarde</strong>
+            <div>{{{lancheDaTarde}}}</div>
+
+            <strong>Jantar</strong>
+            <div>{{{jantar}}}</div>
+
+            <strong>Lanche da Noite</strong>
+            <div>{{{lancheDaNoite}}}</div>
+
+            <strong>Final de Semana</strong>
+            <div>{{{finalDeSemana}}}</div>
+
+            {{#observacoes}}
+            <strong>Observações</strong>
+            <div>{{{observacoes}}}</div>
+            {{/observacoes}}
+          </div>
+        </section>
+        {{/alimentacao}} {{^alimentacao}}{{/alimentacao}} {{#composicaoCorporal}}
+        <section class="historicoContainer">
+          <div class="historicoTopo">
+            <h3>Avaliação de Composição Corporal</h3>
+          </div>
+          <div class="historicoCorpo row">
+            <div class="col-md-12">
+              <h4>Dados</h4>
+              <div class="col-md-6">
+                <strong>Peso (Kg)</strong>
+                <div>{{{peso}}}</div>
+              </div>
+              <div class="col-md-6">
+                <strong>Altura (m)</strong>
+                <div>{{{altura}}}</div>
+              </div>
+              <p>&nbsp;</p>
+              <h4>Dobras</h4>
+              <div class="col-md-4">
+                <strong>D.C. Tríceps</strong>
+                <div>{{{dcTriceps}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>D.C. Bíceps</strong>
+                <div>{{{dcTriceps}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>D.C. Subescapular</strong>
+                <div>{{{dcSubescapular}}}</div>
+              </div>
+              <div>&nbsp;</div>
+              <div class="col-md-4">
+                <strong>D.C. Coxa</strong>
+                <div>{{{dcCoxa}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>D.C. Subescapular</strong>
+                <div>{{{dcSubescapular}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>D.C. Peitoral</strong>
+                <div>{{{dcPeitoral}}}</div>
+              </div>
+              <div>&nbsp;</div>
+              <div class="col-md-4">
+                <strong>D.C. Axiliar</strong>
+                <div>{{{dcAxiliar}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>D.C. Abdominal</strong>
+                <div>{{{dcAbdominal}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>D.C. Panturrilha</strong>
+                <div>{{{dcPanturrilha}}}</div>
+              </div>
+              <div>&nbsp;</div>
+              <div class="col-md-4">
+                <strong>∑7 Dobras</strong>
+                <div>{{{somaDobras}}}</div>
+              </div>
+              <div class="clearfix">&nbsp;</div>
+              <p>&nbsp;</p>
+              <h4>Circunferências</h4>
+              <div class="col-md-2">
+                <strong>Cintura</strong>
+                <div>{{{cintura}}}</div>
+              </div>
+              <div class="col-md-2">
+                <strong>Abdominal</strong>
+                <div>{{{abdominal}}}</div>
+              </div>
+              <div class="col-md-2">
+                <strong>Quadril</strong>
+                <div>{{{quadril}}}</div>
+              </div>
+              <div class="col-md-2">
+                <strong>Torácica</strong>
+                <div>{{{toracica}}}</div>
+              </div>
+              <div class="col-md-2">
+                <strong>Envergadura</strong>
+                <div>{{{envergadura}}}</div>
+              </div>
+              <div class="clearfix">&nbsp;</div>
+              <p>&nbsp;</p>
+              <div class="col-md-6">
+                <p class="text-center"><b>Lado Direito</b></p>
+                <strong>Braço Relaxado</strong>
+                <div>{{{bracoDireitoRelaxado}}}</div>
+
+                <strong>Braço Contraido</strong>
+                <div>{{{bracoDireitoContraido}}}</div>
+
+                <strong>Coxa Proximal</strong>
+                <div>{{{coxaDireitaProximal}}}</div>
+
+                <strong>Coxa Medial</strong>
+                <div>{{{coxaDireitaProximal}}}</div>
+
+                <strong>Coxa Distral</strong>
+                <div>{{{coxaDireitaDistral}}}</div>
+
+                <strong>Panturrilha</strong>
+                <div>{{{panturrilhaDireita}}}</div>
+              </div>
+              <div class="col-md-6">
+                <p class="text-center"><b>Lado Esquerdo</b></p>
+                <strong>Braço Relaxado</strong>
+                <div>{{{bracoEsquerdoRelaxado}}}</div>
+
+                <strong>Braço Contraido</strong>
+                <div>{{{bracoEsquerdoContraido}}}</div>
+
+                <strong>Coxa Proximal</strong>
+                <div>{{{coxaEsquerdaProximal}}}</div>
+
+                <strong>Coxa Medial</strong>
+                <div>{{{coxaEsquerdaProximal}}}</div>
+
+                <strong>Coxa Distral</strong>
+                <div>{{{coxaEsquerdaDistral}}}</div>
+
+                <strong>Panturrilha</strong>
+                <div>{{{panturrilhaEsquerda}}}</div>
+              </div>
+              <div class="clearfix">&nbsp;</div>
+              <p>&nbsp;</p>
+              <h4>Resultados</h4>
+              <div class="col-md-3">
+                <strong>% Gordura</strong>
+                <div>{{{gordura}}}</div>
+              </div>
+              <div class="col-md-3">
+                <strong>KG Gordura</strong>
+                <div>{{{kgGordura}}}</div>
+              </div>
+              <div class="col-md-3">
+                <strong>% Massa magra</strong>
+                <div>{{{massaMagra}}}</div>
+              </div>
+              <div class="col-md-3">
+                <strong>KG Massa magra</strong>
+                <div>{{{kgMassaMagra}}}</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {{/composicaoCorporal}} {{^composicaoCorporal}}{{/composicaoCorporal}} {{#avPreTemp}}
+        <section class="historicoContainer">
+          <div class="historicoTopo">
+            <h3>Avaliação de Pré Temporada</h3>
+          </div>
+          <div class="historicoCorpo">
+            <div>{{{avPreTemporada}}}</div>
+          </div>
+        </section>
+        {{/avPreTemp}} {{^avPreTemp}}{{/avPreTemp}} {{#primeiroAtendimento}}
+        <section class="historicoContainer">
+          <div class="historicoTopo">
+            <h3>Primeiro atendimento</h3>
+          </div>
+          <div class="historicoCorpo">
+            <div class="row">
+              <div class="col-md-6">
+                <strong>Telefone</strong>
+                <div>{{{telefone}}}</div>
+              </div>
+              <div class="col-md-6">
+                <strong>E-mail</strong>
+                <div>{{{email}}}</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <strong>Estado</strong>
+                <div>{{{estado}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>Cidade</strong>
+                <div>{{{cidade}}}</div>
+              </div>
+              <div class="col-md-4">
+                {{#regiao}}
+                <strong>Região</strong>
+                <div>{{{regiao}}}</div>
+                {{/regiao}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Rotina de treino</strong>
+                <div>{{{rotinaTreino}}}</div>
+
+                <strong>Disposição física</strong>
+                <div>{{{disposicaoFisica}}}</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <strong>Com quem mora?</strong>
+                <div>{{{comQuemMora}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>Quem cozinha as refeições na sua casa?</strong>
+                <div>{{{quemCozinha}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>Sabe cozinhar para si mesmo?</strong>
+                <div>{{{sabeCozinhar}}}</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                {{#especificaComQuemMora}}
+                <strong>Especificar com quem mora</strong>
+                <div>{{{especificaComQuemMora}}}</div>
+                {{/especificaComQuemMora}}
+              </div>
+              <div class="col-md-4">
+                {{#especificaQuemCozinha}}
+                <strong>Especifique quem cozinha</strong>
+                <div>{{{especificaQuemCozinha}}}</div>
+                {{/especificaQuemCozinha}}
+              </div>
+              <div class="col-md-4">
+                {{#oqSabeCozinhar}}
+                <strong>O que sabe cozinhar</strong>
+                <div>{{{oqSabeCozinhar}}}</div>
+                {{/oqSabeCozinhar}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Refeições que realiza no refeitório do Clube</strong>
+                <div>{{{refeicoesNoClube}}}</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Traz alguma comida de casa ou compra no clube para os lanches intermediários?</strong>
+                <div>{{{trasComida}}}</div>
+
+                {{#especificaComida}}
+                <strong>Especifique</strong>
+                <div>{{{especificaComida}}}</div>                
+                {{/especificaComida}}
+
+                <strong>Possui alergia ou intolerância alimentar?</strong>
+                <div>{{{possuiAlergia}}}</div>
+
+                {{#especifiqueAlergia}}
+                <strong>Especifique</strong>
+                <div>{{{especifiqueAlergia}}}</div>                
+                {{/especifiqueAlergia}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <strong>É vegetariano?</strong>
+                <div>{{{vegetariano}}}</div>
+              </div>
+              <div class="col-md-6">
+                {{#tipoVegetariano}}
+                <strong>Tipo</strong>
+                <div>{{{tipoVegetariano}}}</div>
+                {{/tipoVegetariano}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Tem ou teve alguma alteração com exames (Colesterol, Glicemia, Triglicérides, Ferro, Ferritina, etc.)</strong>
+                <div>{{{alteracaoExames}}}</div>
+                {{#especificaAlteracao}}
+                <strong>Especifique</strong>
+                <div>{{{especificaAlteracao}}}</div>
+                {{/especificaAlteracao}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Descrever funcionamento intestinal</strong>
+                <div>{{{funcionamento}}}</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <strong>Diabético?</strong>
+                <div>{{{diabetico}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>Pai ou mãe é diabético?</strong>
+                <div>{{{paiOuMaeDiabetico}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>Realiza algum tratamento médico?</strong>
+                <div>{{{tratamento}}}</div>
+              </div>
+              <div class="col-md-4"></div>
+              <div class="col-md-4">
+                {{#especificaDiabetico}}
+                <strong>Especifique</strong>
+                <div>{{{especificaDiabetico}}}</div>
+                {{/especificaDiabetico}}
+              </div>
+              <div class="col-md-4">
+                {{#especificaTratamento}}
+                <strong>Especifique</strong>
+                <div>{{{especificaTratamento}}}</div>
+                {{/especificaTratamento}}
+              </div>
+              <div class="col-md-4">
+                <strong>Toma alguma vitamina / complexo vitamínico?</strong>
+                <div>{{{complexoVitaminico}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>Realiza acompanhamento com nutricionista fora do clube?</strong>
+                <div>{{{nutricionista}}}</div>
+              </div>
+              <div class="col-md-4">
+                <strong>Usa pílula anticoncepcional?</strong>
+                <div>{{{anticoncepcional}}}</div>
+              </div>
+              <div class="col-md-4">
+                {{#especificaVitamina}}
+                <strong>Especifique</strong>
+                <div>{{{especificaVitamina}}}</div>
+                {{/especificaVitamina}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Está com peso ideal para sua modalidade?</strong>
+                <div>{{{peso}}}</div>
+                <strong>Quais suplemento já utilizou?</strong>
+                <div>{{{suplementosAnteriores}}}</div>
+                <strong>Quais suplementos utiliza atualmente?</strong>
+                <div>{{{suplementosAtuais}}}</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <strong>Utiliza Gatorade durante os treinos?</strong>
+                <div>{{{gatorade}}}</div>
+              </div>
+              <div class="col-md-6">
+                {{#qtd}}
+                <strong>Quantidade</strong>
+                <div>{{{qtd}}}</div>
+                {{/qtd}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Conduta</strong>
+                <div>{{{conduta}}}</div>
+                <strong>Observações</strong>
+                <div>{{{obs}}}</div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+        {{/primeiroAtendimento}}
+	</div>
+</body>
+</html>

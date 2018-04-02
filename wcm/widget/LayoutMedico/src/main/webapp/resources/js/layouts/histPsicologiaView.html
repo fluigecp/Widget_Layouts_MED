@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Histórico Psicologia</title>
+	<!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/css/historico.css">
+
+    <link rel="icon" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/images/Esporte_Clube_Pinheiros.ico" type="image/gif" sizes="16x16">
+</head>
+<body>
+	<div class="container-fluid">
+		<header>
+            <img src="http://ecp.fluigcloud.com.br/portal/resources/images/1/logo_image.png">
+        </header>
+        <section class="dadosAtendimento">
+            {{#header}}
+            <strong class="data">Data de registro</strong>
+            <div>{{{dataAtendimento}}}</div>
+
+            <strong class="nomeProficional">Profissional</strong>
+            <div>{{{nome}}}</div>
+            {{/header}}
+        </section>
+        {{#atleta}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Informações do Atleta</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Nome</strong>
+                <div>{{{nome}}}</div>
+
+                <strong>Matrícula</strong>
+                <div>{{{matricula}}}</div>
+
+                <strong>Modalidade</strong>
+                <div>{{{modalidade}}}</div>
+
+                <strong>Categoria</strong>
+                <div>{{{categoria}}}</div>
+                {{#piramide}}
+                <strong>Pirâmide</strong>
+                <div>{{{piramide}}}</div>
+                {{/piramide}}
+
+                <strong>Sexo</strong>
+                <div>{{{sexo}}}</div>
+
+                <strong>Atelta compareceu?</strong>
+                <div>{{{comparecimento}}}</div>
+
+                {{#justificativa}}
+                <strong>Justificou?</strong>
+                <div>{{{justificativa}}}</div>
+
+                {{/justificativa}} {{#descricaoJustificativa}}
+                <strong>Descrição</strong>
+                <div>{{{descricaoJustificativa}}}</div>
+
+                {{/descricaoJustificativa}}
+            </div>
+        </section>
+        {{/atleta}} {{#evolucao}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Evolução</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Evolução do caso</strong>
+                <div>{{{descricao}}}</div>
+            </div>
+        </section>
+        {{/evolucao}}
+	</div>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

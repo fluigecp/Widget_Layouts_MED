@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Histórico Ortopedia</title>
+	<!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/css/historico.css">
+
+    <link rel="icon" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/images/Esporte_Clube_Pinheiros.ico" type="image/gif" sizes="16x16">
+
+    <style type="text/css">
+    	hr {
+			color: #ccc;
+			background-color: #ccc;
+			height: 1px;
+    	}
+    </style>
+</head>
+<body>
+	<div class="container-fluid">
+		<header>
+            <img src="http://ecp.fluigcloud.com.br/portal/resources/images/1/logo_image.png">
+        </header>
+        <section class="dadosAtendimento">
+            {{#header}}
+            <strong class="data">Data de registro</strong>
+            <div>{{{dataAtendimento}}}</div>
+
+            <strong class="nomeProficional">Profissional</strong>
+            <div>{{{nome}}}</div>
+            {{/header}}
+        </section>
+        {{#atleta}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Informações do Atleta</h3>
+            </div>
+            <div class="historicoCorpo">
+                <strong>Nome</strong>
+                <div>{{{nome}}}</div>
+
+                <strong>Matrícula</strong>
+                <div>{{{matricula}}}</div>
+
+                <strong>Modalidade</strong>
+                <div>{{{modalidade}}}</div>
+
+                <strong>Categoria</strong>
+                <div>{{{categoria}}}</div>
+
+                <strong>Atleta compareceu?</strong>
+                <div>{{{comparecimento}}}</div>
+
+                {{#justificativa}}
+                <strong>Justificou?</strong>
+                <div>{{{justificativa}}}</div>
+
+                {{/justificativa}} {{#descricaoJustificativa}}
+                <strong>Descrição</strong>
+                <div>{{{descricaoJustificativa}}}</div>
+
+                {{/descricaoJustificativa}}
+
+            </div>
+        </section>
+        {{/atleta}} {{#dadosAtendimento}}
+        <section class="historicoContainer">
+            <div class="historicoTopo">
+                <h3>Dados do Atendimento</h3>
+            </div>
+            <div class="historicoCorpo">
+                <h4>Queixa / Lesão</h4>
+                <div class="col-md-6">
+                  <strong>Tipo</strong>
+                  <div>{{{tipo}}}</div>
+                </div>
+                <div class="col-md-6">
+                  <strong>Especificar tipo</strong>
+                  <div>{{{tipoEspecifico}}}</div>
+                </div>
+
+                <strong>Complemento da Anamnese</strong>
+                <div>{{{anamnese}}}</div>
+
+                <strong>Localização</strong>
+                <div>{{{localizacao}}}</div>
+
+                <hr>
+
+                <h4>Momento da lesão</h4>
+
+                <strong>Quando aconteceu?</strong>
+                <div>{{{momento}}}</div>
+
+                <hr>
+
+                <h4>Exame Físico</h4>
+                <div>{{{exameFisico}}}</div>
+
+                <strong>Complemento do exame físico</strong>
+                <div>{{{complementoExameFisico}}}</div>
+
+                <hr>
+
+                <h4>Diagnóstico</h4>
+                <strong>CID</strong>
+                <div>{{{cid}}}</div>
+
+                <strong>Descrição do diagnóstico</strong>
+                <div>{{{diagnostico}}}</div>
+
+                <hr>
+
+                <h4>Tratamento</h4>
+                <strong>Medicamento</strong>
+                <div>{{{medicamento}}}</div>
+
+                <strong>Necessário fisioterapia?</strong>
+                <div>{{{fisio}}}</div>
+
+                <strong>Complemento do tratamento</strong>
+                <div>{{{complementoTratamento}}}</div>
+
+                <hr>
+
+                <h4>Afastamento</h4>
+                <div class="row">
+                  <div class="col-md-4">
+                    <strong>Será afastado?</strong>
+                    <div>{{{afastamento}}}</div>
+                  </div>
+                  {{#tipoAfastamento}}
+                  <div class="col-md-4">
+                    <strong>Tipo de afastamento</strong>
+                    <div>{{{tipoAfastamento}}}</div>
+                  </div>
+                  <div class="col-md-4">
+                    <strong>Período</strong>
+                    <div>{{{periodo}}}</div>
+                  </div>
+                  {{/tipoAfastamento}}
+                </div>
+
+                <div class="row">
+                	<div class="col-md-12">
+                		<hr>
+						<h4>Cirurgia</h4>
+                		<strong>Necessidade de cirurgia</strong>
+		                <div>{{{cirurgia}}}</div>
+
+		                <hr>
+
+		                <h4>Observações</h4>
+		                <div>{{{observacoes}}}</div>
+                	</div>
+                </div>
+
+            </div>
+        </section>
+        {{/dadosAtendimento}} {{^dadosAtendimento}}{{/dadosAtendimento}} {{#evolucao}}
+        <section class="historicoContainer">
+          <div class="historicoTopo">
+            <h3>Evolução</h3>
+          </div>
+          <div class="historicoCorpo">
+            <div>{{{evolucao}}}</div>
+          </div>
+        </section>
+        {{/evolucao}} {{^evolucao}}{{/evolucao}} {{#exames}}
+        <section class="historicoContainer">
+          <div class="historicoTopo">
+            <h3>Exames</h3>
+          </div>
+          <div class="historicoCorpo">
+            <strong>Raio X</strong>
+            <div>{{{raiox}}}</div>
+
+            <strong>Ultrassonografia</strong>
+            <div>{{{ultra}}}</div>
+
+            <strong>Tomografia</strong>
+            <div>{{{tomografia}}}</div>
+
+            <strong>Ressonância magnética</strong>
+            <div>{{{ressonancia}}}</div>
+
+            <strong>Outros exames</strong>
+            <div>{{{outros}}}</div>
+          </div>
+        </section>
+        {{/exames}} {{^exames}}{{/exames}}
+	</div>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+header {
+   width: 100%;
+   padding: 10px;
+   background: linear-gradient(55deg, white 25%, #01253b);
+   border-radius: 5px;
+   margin-bottom: 10px;
+   margin-top: 5px;
+}
+.dadosAtendimento {
+   border: 1px solid grey;
+   border-radius: 5px;
+   margin-bottom: 15px;
+   padding: 5px;
+   background: linear-gradient(to right, rgba(6,60,98,1) 0%, rgba(255,255,255,1) 100%);
+   color: white;
+}
+
+.historicoContainer {
+   border: 1px solid grey;
+   border-radius: 5px;
+   margin-bottom: 15px;
+}
+
+.historicoTopo {
+   background: linear-gradient(to right, rgba(6,60,98,1) 0%, rgba(255,255,255,1) 100%);
+   border-top-right-radius: 5px;
+   border-top-left-radius: 5px;
+   color: #FFF;
+   padding: 5px;
+}
+
+.historicoCorpo {
+   padding: 5px;
+}
+
+.historicoCorpo h3 {
+   text-align: center;
+}
+
+.paragrafo {
+   width: 98%;
+   text-indent: 2em;
+   text-align: justify;
+}
+

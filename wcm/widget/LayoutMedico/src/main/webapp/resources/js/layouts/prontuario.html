@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="http://ecp.fluigcloud.com.br:80/portal/resources/style-guide/css/fluig-style-guide.min.css">
+	<link href="http://ecp.fluigcloud.com.br:80/portal/resources/style-guide/css/fluig-style-guide-filter.min.css" rel="stylesheet"
+	 type="text/css">
+	<link href="http://ecp.fluigcloud.com.br:80/portal/resources/style-guide/css/fluig-style-guide-ratingstars.min.css" rel="stylesheet"
+	 type="text/css">
+	<link href='http://ecp.fluigcloud.com.br:80/webdesk/customresources?cid=1&resourceName=temaFormulario/5.css' type="text/css"
+	 rel="stylesheet" />
+	<link rel="stylesheet" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/css/prontuario.css">
+	<link rel="icon" href="http://ecp.fluigcloud.com.br/LayoutMedico/resources/images/Esporte_Clube_Pinheiros.ico" type="image/gif"
+	 sizes="16x16">
+	<link rel="stylesheet" href="http://ecp.fluigcloud.com.br/ECP_Libraries/resources/css/selectBootstrap/bootstrap-select.min.css">
+	<script src="http://ecp.fluigcloud.com.br/ECP_Libraries/resources/css/datatable/datatables.css"></script>
+
+	<title>Prontuário Médico</title>
+</head>
+
+<body class="fluig-style-guide">
+	<div class="container-fluid">
+		<header>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<img src="http://ecp.fluigcloud.com.br/portal/resources/images/1/logo_image.png">
+					<h1 class="text-center fs-text-white">
+						<strong>Prontuário Médico</strong>
+					</h1>
+				</div>
+			</div>
+		</header>
+		<section id="filters">
+			<br>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<ol class="breadcrumb">
+						<li>
+							<h4>
+								<b>Atleta: </b>MATHEUS FRANCISCO DA SILVA</h4>
+						</li>
+					</ol>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<label for="matriculas">Matricula</label>
+					<select class="selectpicker" id="matriculas" data-live-search="true" title="Selecione..." data-live-search-placeholder="Digite uma especialidade para filtrar"
+					 data-width="100%" data-icon-base="fluigicon" data-show-tick="true" data-dropup-auto="false" data-tick-icon="fluigicon-verified">
+						<option value="80358800">80358800</option>
+						<option value="90930814">90930814</option>
+						<option value="80358800">80358800</option>
+					</select>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+					<div class="form-field" data-type="date" data-show-properties="" data-required="avaliacao" data-field-name="date">
+						<div class="form-input">
+							<div class="form-group">
+								<label>Data do início dos sintomas</label>
+								<div class="input-group pointer">
+									<input type="text" class="form-control fs-cursor-pointer fs-no-bg	" name="dateInicio" id="dateInicio" placeholder="Data inicial"
+									 readonly="" value="" />
+									<div class="input-group-addon">
+										Até
+									</div>
+									<input type="text" class="form-control fs-cursor-pointer fs-no-bg" name="dateFim" id="dateFim" placeholder="Data final" readonly=""
+									 value="" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<label for="especialidade">Especialidade</label>
+					<select class="selectpicker" id="especialidade" multiple data-actions-box="true" data-live-search="true" title="Selecione..."
+					 data-live-search-placeholder="Digite uma especialidade para filtrar" data-width="100%" data-icon-base="fluigicon" data-show-tick="true"
+					 data-dropup-auto="false" data-tick-icon="fluigicon-verified" data-selected-text-format="count">
+						<option value="FISIOLOGIA">FISIOLOGIA</option>
+						<option value="FISIOTERAPIA">FISIOTERAPIA</option>
+						<option value="NUTRIÇÃO">NUTRIÇÃO</option>
+						<option value="ORTOPEDIA">ORTOPEDIA</option>
+						<option value="PSICOLOGIA">PSICOLOGIA</option>
+					</select>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+					<label>&nbsp;</label>
+					<button type="button" class="btn btn-primary fs-full-width" id="btnSearch">
+						<i class="fluigicon fluigicon-search"></i> Pesquisar</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<legend></legend>
+				</div>
+			</div>
+		</section>
+		<section id="table">
+			<table id="datatable" class="display table table-bordered table-hover table-condensed table-striped" style="width:100%">
+				<thead>
+					<th>Solicitação</th>
+					<th>Matrícula</th>
+					<th>Especialidade</th>
+					<th>Profissional</th>
+					<th>Data do Atendidmento</th>
+					<th>Anexos</th>
+				</thead>
+			</table>
+		</section>
+	</div>
+	<script src="http://ecp.fluigcloud.com.br/webdesk/vcXMLRPC.js"></script>
+	<script src="http://ecp.fluigcloud.com.br:80/portal/resources/js/jquery/jquery.js"></script>
+	<script src="http://ecp.fluigcloud.com.br:80/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script src="http://ecp.fluigcloud.com.br:80/portal/resources/js/mustache/mustache-min.js"></script>
+	<script src="http://ecp.fluigcloud.com.br:80/portal/resources/style-guide/js/fluig-style-guide.min.js"></script>
+	<script src="http://ecp.fluigcloud.com.br/ECP_Libraries/resources/js/selectBootstrap/bootstrap-select.min.js"></script>
+	<script src="http://ecp.fluigcloud.com.br/ECP_Libraries/resources/js/selectBootstrap/defaults-pt_PT.js"></script>
+	<script src="http://ecp.fluigcloud.com.br/ECP_Libraries/resources/js/datatable/Datatable/jquery.dataTables.min.js"></script>
+	<script src="http://ecp.fluigcloud.com.br/ECP_Libraries/resources/js/datatable/Datatable/datatables.min.js"></script>
+	<script src="http://ecp.fluigcloud.com.br/ECP_Libraries/resources/js/datatable/Datatable/dataTables.bootstrap.min.js"></script>
+	<script src="http://ecp.fluigcloud.com.br/ECP_Libraries/resources/js/datatable/Datatable/convertDate.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			console.log("TESTE")
+			let dados = [];
+			let table;
+			createTable([]);
+			$("button#btnSearch").click(function (e) {
+				let filter = [];
+				let mats = $("#matriculas").val();
+				let especialidades = $("#especialidade").val();
+				let dataInicial = $("#dateInicio").val();
+				let dataFinal = $("#dateFim").val();
+
+
+				if (mats == null || especialidades == null) {
+					setMensagem("Atenção", "É necessário a seleção de pelo menos uma matrícula e uma especialidade.");
+				} else if (dataInicial == "" || dataFinal == "") {
+					setMensagem("Atenção", "Obrigatório informar as duas datas.");
+				} else {
+					dataInicial = dataInicial.split("/");
+					dataFinal = dataFinal.split("/");
+
+
+					filter[filter.length] = DatasetFactory.createConstraint("DT_ATENDIMENTO", dataInicial[2] + "-" + dataInicial[1] + "-" + dataInicial[0], dataFinal[2] + "-" + dataFinal[1] + "-" + dataFinal[0], ConstraintType.MUST);
+					filter[filter.length] = DatasetFactory.createConstraint("TP_ATENDIMENTO", "Individual", "Individual", ConstraintType.MUST);
+					filter[filter.length] = DatasetFactory.createConstraint("MATRICULA", mats, mats, ConstraintType.MUST);
+					for (let j = 0; j < especialidades.length; j++) {
+						filter[filter.length] = DatasetFactory.createConstraint("ESPECIALIDADE", especialidades[j], especialidades[j], ConstraintType.SHOULD);
+					}
+					dados = DatasetFactory.getDataset("dsProntuarioMedico", null, filter, null);
+					if (dados != undefined) {
+						dados = dados.values;
+					} else {
+						dados = [];
+					}
+					createTable(dados);
+				}
+			});
+
+			FLUIGC.calendar('#dateInicio, #dateFim', {
+				pickDate: true,
+				showToday: false,
+				language: 'pt-br',
+				disabledDates: [],
+				enabledDates: [],
+				useStrict: true
+			});
+
+			$(".selectpicker").selectpicker();
+
+			function createTable(element) {
+				if (table != undefined) {
+					table.destroy();
+				}
+				table = $('#datatable').DataTable({
+					data: element,
+					render: function (data, type, row) {
+						console.log("Data");
+						console.log(data);
+						console.log("Type");
+						console.log(type);
+						console.log("ROW");
+						console.log(row);
+						return true;
+					},
+					retrieve: true,
+					columns: [
+						{ data: "SOLIC" },
+						{ data: "MATRICULA" },
+						{ data: "ESPECIALIDADE" },
+						{ data: "PROFESSIONAL" },
+						{ data: "DT_ATENDIMENTO" },
+						{ data: "ID_ANEXOS" }
+					],
+					columnDefs: [
+						{ width: "15%", targets: [0, 1, 5, 3, 2] },
+
+						{ width: "25%", targets: 4, render: $.fn.dataTable.render.moment('YYYY-MM-DD', "DD/MM/YYYY", "pt") }
+					],
+					dom: '<"top" <"row fs-sm-space"<"col-xs-12 col-sm-12 col-md-12 col-lg-12"B>><"row"<"col-xs-12 col-sm-12 col-md-7 col-lg-7"l> <"col-xs-12 col-sm-12 col-md-5 col-lg-5 text-right"f>>>tip',
+					buttons: ['excel'],
+					pagingType: "full_numbers",
+					processing: true,
+					bSort: true,
+					language: {
+						sEmptyTable: "Nenhum registro encontrado",
+						sInfo: "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+						sInfoEmpty: "Mostrando 0 até 0 de 0 registros",
+						sInfoFiltered: "(Filtrados de _MAX_ registros)",
+						sInfoPostFix: "",
+						sInfoThousands: ".",
+						sLengthMenu: "Exibir _MENU_ resultados por página",
+						sLoadingRecords: "Carregando...",
+						sProcessing: "Processando...",
+						sZeroRecords: "Nenhum registro encontrado",
+						sSearch: "Pesquisar ",
+						oPaginate: {
+							sNext: "Próximo",
+							sPrevious: "Anterior",
+							sFirst: "Primeiro",
+							sLast: "Último"
+						},
+						oAria: {
+							sSortAscending: ": Ordenar colunas de forma ascendente",
+							sSortDescending: ": Ordenar colunas de forma descendente"
+						}
+					}
+				});
+			}
+			$('#datatable tbody').on('click', 'tr', function () {
+				let dateLine = table.row(this);
+				let viewInfos = FLUIGC.modal({
+					title: 'Visualização de Atendimento',
+					content: '<h1>Modal Content</h1>',
+					id: 'fluig-modal',
+					size: 'full',
+					actions: [ {
+						'label': 'Close',
+						'autoClose': true
+					}]
+				}, function (err, data) {
+					
+				});
+			});
+		});
+		function setMensagem(title, mensagem) {
+			FLUIGC.message.alert({
+				message: mensagem,
+				title: title,
+				label: 'OK'
+			}, function (el, ev) {
+				return true;
+			});
+		}
+	</script>
+</body>
+
+</html>

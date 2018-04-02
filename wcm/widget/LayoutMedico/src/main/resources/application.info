@@ -1,0 +1,14 @@
+application.type=widget
+application.code=LayoutMedico
+application.title=Layouts de Visualizacao
+application.description=Layouts de Visualizacao de Consultas Medicas
+application.category=Medico
+application.renderer=freemarker
+developer.code=MK
+application.resource.css.1=/resources/css/historico.css
+developer.name=Marcos
+developer.url=http://www.fluig.com
+application.uiwidget=true
+application.mobileapp=true
+view.file=view.ftl
+edit.file=edit.ftl
