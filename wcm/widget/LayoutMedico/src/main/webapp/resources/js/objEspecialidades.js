@@ -4,7 +4,7 @@
 
 var obj = {};
 
-function nutricao(dados, view){
+function nutricao(dados, profissional, view){
 	//Cabeçalho
 	obj.header = {
     nome: profissional,
@@ -174,7 +174,7 @@ function nutricao(dados, view){
 	return obj;//retorno da função é o obj com os dados que serão exibidos
 }
 
-function	fisioterapia(dados, view){
+function	fisioterapia(dados, profissional, view){
 	//Infos do cabeçalho
   obj.header = {
     nome: profissional,
@@ -322,7 +322,7 @@ function	fisioterapia(dados, view){
 	return obj;
 }
 
-function psicologia(dados, view) {
+function psicologia(dados, profissional, view) {
   //Infos do cabeçalho
   obj.header = {
       nome: profissional,
@@ -365,7 +365,7 @@ function psicologia(dados, view) {
 	return obj;
 }
 
-function fisiologia(dados, view) {
+function fisiologia(dados, profissional, view) {
 	//Infos do cabeçalho
 	obj.header = {
     dataAtendimento : dados.dataAtendimento,
@@ -488,7 +488,7 @@ function fisiologia(dados, view) {
 	return obj;
 }
 
-function ortopedia(dados, view) {
+function ortopedia(dados, profissional, view) {
 	//Infos do cabeçalho
 	obj.header = {
       dataAtendimento: dados.dataAtendimento,
