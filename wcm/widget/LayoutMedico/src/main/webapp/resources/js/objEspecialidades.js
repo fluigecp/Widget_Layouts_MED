@@ -1,7 +1,10 @@
 /**
 *@description Monta os objetos das especialidades, as funções precisam receber o objeto com os valores que serão tratados e o objeto que será retornado
 **/
-function nutricao(dados, obj, view){
+
+var obj = {};
+
+function nutricao(dados, view){
 	//Cabeçalho
 	obj.header = {
     nome: profissional,
@@ -171,7 +174,7 @@ function nutricao(dados, obj, view){
 	return obj;//retorno da função é o obj com os dados que serão exibidos
 }
 
-function	fisioterapia(dados, obj, view){
+function	fisioterapia(dados, view){
 	//Infos do cabeçalho
   obj.header = {
     nome: profissional,
@@ -319,7 +322,7 @@ function	fisioterapia(dados, obj, view){
 	return obj;
 }
 
-function psicologia(dados, obj, view) {
+function psicologia(dados, view) {
   //Infos do cabeçalho
   obj.header = {
       nome: profissional,
@@ -362,7 +365,7 @@ function psicologia(dados, obj, view) {
 	return obj;
 }
 
-function fisiologia(dados, obj, view) {
+function fisiologia(dados, view) {
 	//Infos do cabeçalho
 	obj.header = {
     dataAtendimento : dados.dataAtendimento,
@@ -485,7 +488,7 @@ function fisiologia(dados, obj, view) {
 	return obj;
 }
 
-function ortopedia(dados, obj, view) {
+function ortopedia(dados, view) {
 	//Infos do cabeçalho
 	obj.header = {
       dataAtendimento: dados.dataAtendimento,
