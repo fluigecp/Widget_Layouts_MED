@@ -48,7 +48,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 					<label for="matriculas">Matricula</label>
-					<select class="selectpicker" id="matriculas" data-live-search="true" title="Selecione..." data-live-search-placeholder="Digite uma especialidade para filtrar"
+					<select class="selectpicker" id="matriculas" data-live-search="false" title="Selecione..." data-live-search-placeholder="Digite uma especialidade para filtrar"
 					 data-width="100%" data-icon-base="fluigicon" data-show-tick="true" data-dropup-auto="false" data-tick-icon="fluigicon-verified">
 						<option value="80358800">80358800</option>
 						<option value="90930814">90930814</option>
@@ -106,6 +106,7 @@
 					<th>Profissional</th>
 					<th>Data do Atendidmento</th>
 					<th>Anexos</th>
+					<th>Info</th>
 				</thead>
 			</table>
 		</section>
@@ -171,6 +172,10 @@
 			});
 
 			$(".selectpicker").selectpicker();
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+				$('.selectpicker').selectpicker('mobile');
+			}
+
 
 			function createTable(element) {
 				if (table != undefined) {
@@ -178,15 +183,6 @@
 				}
 				table = $('#datatable').DataTable({
 					data: element,
-					render: function (data, type, row) {
-						console.log("Data");
-						console.log(data);
-						console.log("Type");
-						console.log(type);
-						console.log("ROW");
-						console.log(row);
-						return true;
-					},
 					retrieve: true,
 					columns: [
 						{ data: "SOLIC" },
@@ -194,12 +190,14 @@
 						{ data: "ESPECIALIDADE" },
 						{ data: "PROFESSIONAL" },
 						{ data: "DT_ATENDIMENTO" },
-						{ data: "ID_ANEXOS" }
+						{ data: "ID_ANEXOS" },
+						{ data: null }
 					],
 					columnDefs: [
 						{ width: "15%", targets: [0, 1, 5, 3, 2] },
 
-						{ width: "25%", targets: 4, render: $.fn.dataTable.render.moment('YYYY-MM-DD', "DD/MM/YYYY", "pt") }
+						{ width: "15%", targets: 4, render: $.fn.dataTable.render.moment('YYYY-MM-DD', "DD/MM/YYYY", "pt") },
+						{ width: "10%", targets: 6, className: "text-center", defaultContent: '<button class="btn btn-default"><i class="fluigicon fluigicon-zoom-in"></i></button>' }
 					],
 					dom: '<"top" <"row fs-sm-space"<"col-xs-12 col-sm-12 col-md-12 col-lg-12"B>><"row"<"col-xs-12 col-sm-12 col-md-7 col-lg-7"l> <"col-xs-12 col-sm-12 col-md-5 col-lg-5 text-right"f>>>tip',
 					buttons: ['excel'],
@@ -231,19 +229,19 @@
 					}
 				});
 			}
-			$('#datatable tbody').on('click', 'tr', function () {
+			$('#datatable tbody').on('click', 'button', function () {
 				let dateLine = table.row(this);
 				let viewInfos = FLUIGC.modal({
 					title: 'Visualização de Atendimento',
 					content: '<h1>Modal Content</h1>',
 					id: 'fluig-modal',
 					size: 'full',
-					actions: [ {
+					actions: [{
 						'label': 'Close',
 						'autoClose': true
 					}]
 				}, function (err, data) {
-					
+
 				});
 			});
 		});
