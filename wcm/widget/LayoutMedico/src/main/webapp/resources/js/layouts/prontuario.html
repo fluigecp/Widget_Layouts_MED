@@ -134,7 +134,7 @@
 			console.log("TESTE");
 			var nome, matAtual, codProcess;
 			if ($('#nome').text() == "") {
-				let url = new URL (window.location.href);
+				let url = new URL(window.location.href);
 				nome = url.searchParams.get("nome")
 				matAtual = url.searchParams.get("matricula");
 				codProcess = url.searchParams.get("especialidade");
@@ -147,26 +147,27 @@
 				$('#nome').text(nome);
 
 				let filtro = [];
-				filtro[0] = DatasetFactory.createConstraint("ATLETA", nome, nome, ConstraintType.MUST);
-				matriculas = DatasetFactory.getDataset("dsProntuarioMedico", ["MATRICULA"], filtro, null);
-
-				let vetorMatriculas = [];
-				$(matriculas.values).each(function (index, valor) {
-					if (vetorMatriculas.indexOf(valor.MATRICULA) == -1 || vetorMatriculas.length == 0) {
-						vetorMatriculas.push(valor.MATRICULA);
-					}
-				})
-				let select = $('select[name="matriculas"]')[0];
-				$.each(vetorMatriculas, function (i, j) {
-					let opcao = document.createElement("option");
-					opcao.text = j;
-					opcao.value = j;
-					select.appendChild(opcao);
-					if (j == matAtual) {
-						$('#matriculas').selectpicker('val', j);
+				filtro[0] = DatasetFactory.createConstraint("nomeAtleta", nome, nome, ConstraintType.MUST);
+				var matriculas = DatasetFactory.getDataset("alimentar_prontuario", ["docAtleta"], filtro, null);
+				matriculas = matriculas.values;
+				let vetorMatriculas = { data: [] };
+				let mat = []
+				matriculas.filter(function (elem, i, array) {
+					if (mat.indexOf(elem.docAtleta) == -1) {
+						mat.push(elem.docAtleta);
+						return vetorMatriculas.data.push({ matricula: elem.docAtleta });
 					}
 				});
-				$('#especialidade').selectpicker('selectAll');
+				if (vetorMatriculas.length == 0) {
+					setMensagem("Atenção!", "O atleta informado ainda não tem prontuário. Essa será o primeiro atendimento.");
+				} else {
+					let temp = '{{#data}}<option value="{{{matricula}}}">{{{matricula}}}</option>{{/data}}';
+					let html = Mustache.render(temp, vetorMatriculas);
+					$("#matriculas").append(html);
+					$('#matriculas').selectpicker('refresh');
+					$('#matriculas').selectpicker('val', matAtual);
+					$('#especialidade').selectpicker('selectAll');
+				}
 			}
 			let dados = [];
 			let table;
@@ -214,100 +215,102 @@
 				$('.selectpicker').selectpicker('mobile');
 			}
 			function createTable(element) {
-				if (table != undefined) {
+				if (table != undefined && event.type != "DOMContentLoaded") {
 					table.destroy();
 				}
-				table = $('#datatable').DataTable({
-					data: element,
-					retrieve: true,
-					columns: [
-						{ data: "SOLIC" },
-						{ data: "MATRICULA" },
-						{ data: "ESPECIALIDADE" },
-						{ data: "PROFESSIONAL" },
-						{ data: "DT_ATENDIMENTO" },
-						{ data: "ID_ANEXOS" },
-						{ data: null }
-					],
-					columnDefs: [
-						{ width: "15%", targets: [0, 1, 5, 3, 2] },
+				if (event.type != "DOMContentLoaded") {
 
-						{ width: "15%", targets: 4, render: $.fn.dataTable.render.moment('YYYY-MM-DD', "DD/MM/YYYY", "pt") },
-						{ width: "10%", targets: 6, className: "text-center", defaultContent: '<button class="btn btn-default"><i class="fluigicon fluigicon-zoom-in"></i></button>' }
-					],
-					dom: '<"top" <"row fs-sm-space"<"col-xs-12 col-sm-12 col-md-12 col-lg-12"B>><"row"<"col-xs-12 col-sm-12 col-md-7 col-lg-7"l> <"col-xs-12 col-sm-12 col-md-5 col-lg-5 text-right"f>>>tip',
-					buttons: ['excel'],
-					pagingType: "full_numbers",
-					processing: true,
-					bSort: true,
-					language: {
-						sEmptyTable: "Nenhum registro encontrado",
-						sInfo: "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-						sInfoEmpty: "Mostrando 0 até 0 de 0 registros",
-						sInfoFiltered: "(Filtrados de _MAX_ registros)",
-						sInfoPostFix: "",
-						sInfoThousands: ".",
-						sLengthMenu: "Exibir _MENU_ resultados por página",
-						sLoadingRecords: "Carregando...",
-						sProcessing: "Processando...",
-						sZeroRecords: "Nenhum registro encontrado",
-						sSearch: "Pesquisar ",
-						oPaginate: {
-							sNext: "Próximo",
-							sPrevious: "Anterior",
-							sFirst: "Primeiro",
-							sLast: "Último"
-						},
-						oAria: {
-							sSortAscending: ": Ordenar colunas de forma ascendente",
-							sSortDescending: ": Ordenar colunas de forma descendente"
+					table = $('#datatable').DataTable({
+						data: element,
+						retrieve: true,
+						columns: [
+							{ data: "SOLIC" },
+							{ data: "MATRICULA" },
+							{ data: "ESPECIALIDADE" },
+							{ data: "PROFESSIONAL" },
+							{ data: "DT_ATENDIMENTO" },
+							{ data: "ID_ANEXOS" },
+							{ data: null }
+						],
+						columnDefs: [
+							{ width: "15%", targets: [0, 1, 5, 3, 2] },
+
+							{ width: "15%", targets: 4, render: $.fn.dataTable.render.moment('YYYY-MM-DD', "DD/MM/YYYY", "pt") },
+							{ width: "10%", targets: 6, className: "text-center", defaultContent: '<button class="btn btn-default openModal"><i class="fluigicon fluigicon-zoom-in"></i></button>' }
+						],
+						dom: '<"top" <"row fs-sm-space"<"col-xs-12 col-sm-12 col-md-12 col-lg-12"B>><"row"<"col-xs-12 col-sm-12 col-md-7 col-lg-7"l> <"col-xs-12 col-sm-12 col-md-5 col-lg-5 text-right"f>>>tip',
+						buttons: ['excel'],
+						pagingType: "full_numbers",
+						processing: true,
+						bSort: true,
+						language: {
+							sEmptyTable: "Nenhum registro encontrado",
+							sInfo: "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+							sInfoEmpty: "Mostrando 0 até 0 de 0 registros",
+							sInfoFiltered: "(Filtrados de _MAX_ registros)",
+							sInfoPostFix: "",
+							sInfoThousands: ".",
+							sLengthMenu: "Exibir _MENU_ resultados por página",
+							sLoadingRecords: "Carregando...",
+							sProcessing: "Processando...",
+							sZeroRecords: "Nenhum registro encontrado",
+							sSearch: "Pesquisar ",
+							oPaginate: {
+								sNext: "Próximo",
+								sPrevious: "Anterior",
+								sFirst: "Primeiro",
+								sLast: "Último"
+							},
+							oAria: {
+								sSortAscending: ": Ordenar colunas de forma ascendente",
+								sSortDescending: ": Ordenar colunas de forma descendente"
+							}
 						}
-					}
-				});
+					});
+				}
 			}
-			$('#datatable tbody').on('click', 'button', function () {
+			$('body').on('click', '.openModal', function () {
 				let dateLine = table.row(this);
-
 				let nameTemplate;
 				let template;
 				let html;
-				let dataTemplate = (table.row( $(this).closest("tr") ).data()).ESPECIALIDADE;
-				let solicitacao = (table.row( $(this).closest("tr") ).data()).SOLIC;
+				let dataTemplate = (table.row($(this).closest("tr")).data()).ESPECIALIDADE;
+				let solicitacao = (table.row($(this).closest("tr")).data()).SOLIC;
 				let filters = [];
-				let profissional = (table.row( $(this).closest("tr") ).data()).PROFESSIONAL;
+				let profissional = (table.row($(this).closest("tr")).data()).PROFESSIONAL;
 				let c1 = DatasetFactory.createConstraint("solicitacao", solicitacao, solicitacao, ConstraintType.MUST);
 				let docID = DatasetFactory.getDataset("getFichaSolic", ["documentid"], [c1], null);
 				let data = {};
 				let view = codProcess === dataTemplate ? false : true;
+				let _return;
 
 				if (dataTemplate == "NUTRIÇÃO") {
 					nameTemplate = "histNutricao.html";
-					let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_individual_nutricao");
+					_return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_individual_nutricao");
 
 					data = nutricao(_return, profissional, view);
 
 				} else if (dataTemplate == "FISIOTERAPIA") {
 					nameTemplate = "histFisioterapia.html";
-					let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_fisioterapia");
+					_return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_fisioterapia");
 
 					data = fisioterapia(_return, profissional, view);
 
 				} else if (dataTemplate == "PSICOLOGIA") {
 					nameTemplate = "histPsicologiaView.html";
-					let _return = buscaDadosAtendimento(docID.values[0].documentid, "psicologia_registrar_atendimento_individual");
+					_return = buscaDadosAtendimento(docID.values[0].documentid, "psicologia_registrar_atendimento_individual");
 
 					data = psicologia(_return, profissional, view);
 
 				} else if (dataTemplate == "FISIOLOGIA") {
 					nameTemplate = "histPsicologiaView.html";
-					let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_fisiologia");
+					_return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_fisiologia");
 
 					data = fisiologia(_return, profissional, view);
 
 				} else if (dataTemplate == "ORTOPEDIA") {
 					nameTemplate = "histOrtopedia.html";
-					let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_ortopedia");
-
+					_return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_ortopedia");
 					data = ortopedia(_return, profissional, view);
 
 				}
@@ -328,11 +331,7 @@
 					title: 'Visualização de Atendimento',
 					content: html,
 					id: 'viewConsulta',
-					size: 'full',
-					actions: [{
-						'label': 'Fechar',
-						'autoClose': true
-					}]
+					size: 'full'
 				}, function (err, data) {
 					setTimeout(() => {
 						$("#viewConsulta").css({
