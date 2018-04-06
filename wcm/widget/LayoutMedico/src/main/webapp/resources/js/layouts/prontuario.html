@@ -40,7 +40,7 @@
 					<ol class="breadcrumb">
 						<li>
 							<h4>
-								<b>Atleta: </b>MATHEUS FRANCISCO DA SILVA</h4>
+								<b>Atleta: </b><span id="nome"></span></h4>
 						</li>
 					</ol>
 				</div>
@@ -48,11 +48,8 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 					<label for="matriculas">Matricula</label>
-					<select class="selectpicker" id="matriculas" data-live-search="false" title="Selecione..." data-live-search-placeholder="Digite uma especialidade para filtrar"
+					<select class="selectpicker" name="matriculas" id="matriculas" data-live-search="false" title="Selecione..." data-live-search-placeholder="Digite uma especialidade para filtrar"
 					 data-width="100%" data-icon-base="fluigicon" data-show-tick="true" data-dropup-auto="false" data-tick-icon="fluigicon-verified">
-						<option value="80358800">80358800</option>
-						<option value="90930814">90930814</option>
-						<option value="80358800">80358800</option>
 					</select>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
@@ -123,9 +120,48 @@
 	<script src="http://ecp.fluigcloud.com.br/ECP_Libraries/resources/js/datatable/Datatable/dataTables.bootstrap.min.js"></script>
 	<script src="http://ecp.fluigcloud.com.br/ECP_Libraries/resources/js/datatable/Datatable/convertDate.js"></script>
 
+	<script type="text/javascript" src="http://ecp.fluigcloud.com.br/LayoutMedico/resources/js/objEspecialidades.js"></script>
+
+	</script>
+
 	<script>
 		$(document).ready(function () {
-			console.log("TESTE")
+			if ($('#nome').text() == "") {
+				let url   = window.location.search.replace("?", "");
+				let listaDeParametros = url.split("&");
+				let nome = (listaDeParametros[0].split("=")[1]).replace(/%20/g, " ");
+				let matAtual = (listaDeParametros[1].split("=")[1]);
+				$('#nome').text(nome);
+
+				let filtro = [];
+				filtro[0] = DatasetFactory.createConstraint("ATLETA", nome, nome, ConstraintType.MUST);
+				matriculas = DatasetFactory.getDataset("dsProntuarioMedico", ["MATRICULA"], filtro, null);
+
+				let vetorMatriculas = [];
+				$(matriculas.values).each(function(index, valor){
+					if (vetorMatriculas.indexOf(valor.MATRICULA) == -1 || vetorMatriculas.length == 0) {
+						vetorMatriculas.push(valor.MATRICULA);
+					}
+				});
+
+				let select = $('select[name="matriculas"]')[0];
+			  $.each(vetorMatriculas, function(i, j){
+			    let opcao = document.createElement("option");
+			    opcao.text  = j;
+			    opcao.value = j;
+					select.appendChild(opcao);
+
+					if (j == matAtual) {
+						$('#matriculas').selectpicker('val', j);
+					}
+
+			  });
+
+				$('#especialidade').selectpicker('selectAll');
+
+				$( "#btnSearch" ).trigger( "click" );
+
+			}
 			let dados = [];
 			let table;
 			createTable([]);
@@ -231,9 +267,65 @@
 			}
 			$('#datatable tbody').on('click', 'button', function () {
 				let dateLine = table.row(this);
+
+		    let nameTemplate;
+		    let template;
+		    let html;
+		    let dataTemplate = ($(this.parentElement).closest("tr").find("td"))[2].innerText;
+		    let solicitacao = ($(this.parentElement).closest("tr").find("td"))[0].innerText;
+		    let filters = [];
+		    let profissional = ($(this.parentElement).closest("tr").find("td"))[3].innerText;
+		    let c1 = DatasetFactory.createConstraint("solicitacao", solicitacao, solicitacao, ConstraintType.MUST);
+		    let docID = DatasetFactory.getDataset("getFichaSolic", ["documentid"], [c1], null);
+		    let data = {};
+
+		    if (dataTemplate == "NUTRIÇÃO") {
+		      nameTemplate = "histNutricao.html";
+		      let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_individual_nutricao");
+
+		      data = nutricao(_return, profissional, false);
+
+		    } else if (dataTemplate == "FISIOTERAPIA") {
+		        nameTemplate = "histFisioterapia.html";
+						let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_fisioterapia");
+
+		        data = fisioterapia(_return, profissional, true);
+
+		    } else if (dataTemplate == "PSICOLOGIA") {
+		        nameTemplate = "histPsicologiaView.html";
+						let _return = buscaDadosAtendimento(docID.values[0].documentid, "psicologia_registrar_atendimento_individual");
+
+		        data = psicologia(_return, profissional, true);
+
+		    } else if (dataTemplate == "FISIOLOGIA") {
+		        nameTemplate = "histPsicologiaView.html";
+						let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_fisiologia");
+
+		        data = fisiologia(_return, profissional, true);
+
+		    } else if (dataTemplate == "ORTOPEDIA") {
+		      nameTemplate = "histOrtopedia.html";
+					let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_ortopedia");
+
+		      data = ortopedia(_return, profissional, true);
+
+		    }
+		    // request the template
+		    console.log(data);
+
+		    $.ajax({
+		        url: "/LayoutMedico/resources/js/layouts/" + nameTemplate,
+		        async: false,
+		        type: 'get',
+		        datatype: 'html,charset=utf-8'
+		    }).done(function (content) {
+		        template = content;
+		    });
+		    html = Mustache.render(template, data);
+
 				let viewInfos = FLUIGC.modal({
 					title: 'Visualização de Atendimento',
-					content: '<h1>Modal Content</h1>',
+					content: html,
 					id: 'fluig-modal',
 					size: 'full',
 					actions: [{
@@ -253,6 +345,14 @@
 			}, function (el, ev) {
 				return true;
 			});
+		}
+
+		function buscaDadosAtendimento(nmrFicha, dataset){
+			let filters = [];
+			filters[0] = DatasetFactory.createConstraint("documentid", nmrFicha, nmrFicha, ConstraintType.MUST);
+			filters[1] = DatasetFactory.createConstraint("metadata#active", "true", "true", ConstraintType.MUST);
+			let _return = DatasetFactory.getDataset(dataset, null, filters, null);
+			return _return.values[0];
 		}
 	</script>
 </body>
