@@ -40,7 +40,9 @@
 					<ol class="breadcrumb">
 						<li>
 							<h4>
-								<b>Atleta: </b><span id="nome"></span></h4>
+								<b>Atleta: </b>
+								<span id="nome"></span>
+							</h4>
 						</li>
 					</ol>
 				</div>
@@ -125,12 +127,23 @@
 	</script>
 
 	<script>
+		$(window).load(function () {
+			$("#btnSearch").trigger("click");
+		})
 		$(document).ready(function () {
+			console.log("TESTE");
+			var nome, matAtual, codProcess;
 			if ($('#nome').text() == "") {
-				let url   = window.location.search.replace("?", "");
-				let listaDeParametros = url.split("&");
-				let nome = (listaDeParametros[0].split("=")[1]).replace(/%20/g, " ");
-				let matAtual = (listaDeParametros[1].split("=")[1]);
+				let url = new URL (window.location.href);
+				nome = url.searchParams.get("nome")
+				matAtual = url.searchParams.get("matricula");
+				codProcess = url.searchParams.get("especialidade");
+				let dateInicial, dateFinal;
+
+				dateInicial = moment().subtract("M", 1).format("DD/MM/YYYY");
+				dateFinal = moment().format("DD/MM/YYYY");
+				$("#dateInicio").val(dateInicial);
+				$("#dateFim").val(dateFinal);
 				$('#nome').text(nome);
 
 				let filtro = [];
@@ -138,29 +151,22 @@
 				matriculas = DatasetFactory.getDataset("dsProntuarioMedico", ["MATRICULA"], filtro, null);
 
 				let vetorMatriculas = [];
-				$(matriculas.values).each(function(index, valor){
+				$(matriculas.values).each(function (index, valor) {
 					if (vetorMatriculas.indexOf(valor.MATRICULA) == -1 || vetorMatriculas.length == 0) {
 						vetorMatriculas.push(valor.MATRICULA);
 					}
-				});
-
+				})
 				let select = $('select[name="matriculas"]')[0];
-			  $.each(vetorMatriculas, function(i, j){
-			    let opcao = document.createElement("option");
-			    opcao.text  = j;
-			    opcao.value = j;
+				$.each(vetorMatriculas, function (i, j) {
+					let opcao = document.createElement("option");
+					opcao.text = j;
+					opcao.value = j;
 					select.appendChild(opcao);
-
 					if (j == matAtual) {
 						$('#matriculas').selectpicker('val', j);
 					}
-
-			  });
-
+				});
 				$('#especialidade').selectpicker('selectAll');
-
-				$( "#btnSearch" ).trigger( "click" );
-
 			}
 			let dados = [];
 			let table;
@@ -171,8 +177,6 @@
 				let especialidades = $("#especialidade").val();
 				let dataInicial = $("#dateInicio").val();
 				let dataFinal = $("#dateFim").val();
-
-
 				if (mats == null || especialidades == null) {
 					setMensagem("Atenção", "É necessário a seleção de pelo menos uma matrícula e uma especialidade.");
 				} else if (dataInicial == "" || dataFinal == "") {
@@ -180,8 +184,6 @@
 				} else {
 					dataInicial = dataInicial.split("/");
 					dataFinal = dataFinal.split("/");
-
-
 					filter[filter.length] = DatasetFactory.createConstraint("DT_ATENDIMENTO", dataInicial[2] + "-" + dataInicial[1] + "-" + dataInicial[0], dataFinal[2] + "-" + dataFinal[1] + "-" + dataFinal[0], ConstraintType.MUST);
 					filter[filter.length] = DatasetFactory.createConstraint("TP_ATENDIMENTO", "Individual", "Individual", ConstraintType.MUST);
 					filter[filter.length] = DatasetFactory.createConstraint("MATRICULA", mats, mats, ConstraintType.MUST);
@@ -211,8 +213,6 @@
 			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
 				$('.selectpicker').selectpicker('mobile');
 			}
-
-
 			function createTable(element) {
 				if (table != undefined) {
 					table.destroy();
@@ -268,72 +268,82 @@
 			$('#datatable tbody').on('click', 'button', function () {
 				let dateLine = table.row(this);
 
-		    let nameTemplate;
-		    let template;
-		    let html;
-		    let dataTemplate = ($(this.parentElement).closest("tr").find("td"))[2].innerText;
-		    let solicitacao = ($(this.parentElement).closest("tr").find("td"))[0].innerText;
-		    let filters = [];
-		    let profissional = ($(this.parentElement).closest("tr").find("td"))[3].innerText;
-		    let c1 = DatasetFactory.createConstraint("solicitacao", solicitacao, solicitacao, ConstraintType.MUST);
-		    let docID = DatasetFactory.getDataset("getFichaSolic", ["documentid"], [c1], null);
-		    let data = {};
+				let nameTemplate;
+				let template;
+				let html;
+				let dataTemplate = (table.row( $(this).closest("tr") ).data()).ESPECIALIDADE;
+				let solicitacao = (table.row( $(this).closest("tr") ).data()).SOLIC;
+				let filters = [];
+				let profissional = (table.row( $(this).closest("tr") ).data()).PROFESSIONAL;
+				let c1 = DatasetFactory.createConstraint("solicitacao", solicitacao, solicitacao, ConstraintType.MUST);
+				let docID = DatasetFactory.getDataset("getFichaSolic", ["documentid"], [c1], null);
+				let data = {};
+				let view = codProcess === dataTemplate ? false : true;
 
-		    if (dataTemplate == "NUTRIÇÃO") {
-		      nameTemplate = "histNutricao.html";
-		      let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_individual_nutricao");
+				if (dataTemplate == "NUTRIÇÃO") {
+					nameTemplate = "histNutricao.html";
+					let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_individual_nutricao");
 
-		      data = nutricao(_return, profissional, false);
+					data = nutricao(_return, profissional, view);
 
-		    } else if (dataTemplate == "FISIOTERAPIA") {
-		        nameTemplate = "histFisioterapia.html";
-						let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_fisioterapia");
+				} else if (dataTemplate == "FISIOTERAPIA") {
+					nameTemplate = "histFisioterapia.html";
+					let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_fisioterapia");
 
-		        data = fisioterapia(_return, profissional, true);
+					data = fisioterapia(_return, profissional, view);
 
-		    } else if (dataTemplate == "PSICOLOGIA") {
-		        nameTemplate = "histPsicologiaView.html";
-						let _return = buscaDadosAtendimento(docID.values[0].documentid, "psicologia_registrar_atendimento_individual");
+				} else if (dataTemplate == "PSICOLOGIA") {
+					nameTemplate = "histPsicologiaView.html";
+					let _return = buscaDadosAtendimento(docID.values[0].documentid, "psicologia_registrar_atendimento_individual");
 
-		        data = psicologia(_return, profissional, true);
+					data = psicologia(_return, profissional, view);
 
-		    } else if (dataTemplate == "FISIOLOGIA") {
-		        nameTemplate = "histPsicologiaView.html";
-						let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_fisiologia");
+				} else if (dataTemplate == "FISIOLOGIA") {
+					nameTemplate = "histPsicologiaView.html";
+					let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_fisiologia");
 
-		        data = fisiologia(_return, profissional, true);
+					data = fisiologia(_return, profissional, view);
 
-		    } else if (dataTemplate == "ORTOPEDIA") {
-		      nameTemplate = "histOrtopedia.html";
+				} else if (dataTemplate == "ORTOPEDIA") {
+					nameTemplate = "histOrtopedia.html";
 					let _return = buscaDadosAtendimento(docID.values[0].documentid, "registrar_atendimento_ortopedia");
 
-		      data = ortopedia(_return, profissional, true);
+					data = ortopedia(_return, profissional, view);
 
-		    }
-		    // request the template
-		    console.log(data);
+				}
+				// request the template
+				console.log(data);
 
-		    $.ajax({
-		        url: "/LayoutMedico/resources/js/layouts/" + nameTemplate,
-		        async: false,
-		        type: 'get',
-		        datatype: 'html,charset=utf-8'
-		    }).done(function (content) {
-		        template = content;
-		    });
-		    html = Mustache.render(template, data);
+				$.ajax({
+					url: "/LayoutMedico/resources/js/layouts/" + nameTemplate,
+					async: false,
+					type: 'get',
+					datatype: 'html,charset=utf-8'
+				}).done(function (content) {
+					template = content;
+				});
+				html = Mustache.render(template, data);
 
 				let viewInfos = FLUIGC.modal({
 					title: 'Visualização de Atendimento',
 					content: html,
-					id: 'fluig-modal',
+					id: 'viewConsulta',
 					size: 'full',
 					actions: [{
-						'label': 'Close',
+						'label': 'Fechar',
 						'autoClose': true
 					}]
 				}, function (err, data) {
-
+					setTimeout(() => {
+						$("#viewConsulta").css({
+							"height": "95vmin",
+							"overflow": "hidden"
+						}).addClass("fs-full-width");
+						$(".modal-body").css({
+							"max-height": "87vmin",
+							"height": "87vmin"
+						}).addClass("fs-full-width");
+					}, 100);
 				});
 			});
 		});
@@ -347,7 +357,7 @@
 			});
 		}
 
-		function buscaDadosAtendimento(nmrFicha, dataset){
+		function buscaDadosAtendimento(nmrFicha, dataset) {
 			let filters = [];
 			filters[0] = DatasetFactory.createConstraint("documentid", nmrFicha, nmrFicha, ConstraintType.MUST);
 			filters[1] = DatasetFactory.createConstraint("metadata#active", "true", "true", ConstraintType.MUST);
