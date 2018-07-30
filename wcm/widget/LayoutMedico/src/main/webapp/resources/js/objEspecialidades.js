@@ -212,8 +212,8 @@ function fisioterapia(dados, profissional, view) {
 	if (dados.especificoGeral !== "" && dados.especificoGeral !== null) {
 		obj.prevencao = {
 			tipo: dados.especificoGeral,
-			segmento: dados.especificoGeral == "Especifico" ? getList("preSegmento_", array, dados) : "<ul><li>Geral</li></ul>",
-			lado: dados.especificoGeral == "Especifico" ? getList("preLado_", array, dados) : "<ul><li>Geral</li></ul>",
+			segmento: dados.especificoGeral == "Especifico" ? getList("preSegmento_", dados) : "<ul><li>Geral</li></ul>",
+			lado: dados.especificoGeral == "Especifico" ? getList("preLado_", dados) : "<ul><li>Geral</li></ul>",
 			obs: dados.obsPrevensao == "" ? false : dados.obsPrevensao
 		}
 	} else {
@@ -275,9 +275,9 @@ function fisioterapia(dados, profissional, view) {
 		obj.bandagem = false;
 	}
 
-  /**
-	*@description Caso o nome da competição esteja preenchido monta o obj
-	**/
+	/**
+	  *@description Caso o nome da competição esteja preenchido monta o obj
+	  **/
 	if (dados.nomeCompeticao != "" && dados.nomeCompeticao !== null) {
 		obj.competicao = {
 			nomeCompeticao: dados.nomeCompeticao,
@@ -303,12 +303,12 @@ function fisioterapia(dados, profissional, view) {
 				avaliacao: dados.avaliacao,
 				afastado: dados.afastamentoRecuperacao,
 				tpAfastamento: dados.afastamentoRecuperacao == "Sim" ? dados.tipoAfastamentoRec : false,
-				avSegmento_: getList("avSegmento_", array, dados),
-				avLado_: getList("avLado_", array, dados),
-				avEstrutura_: getList("avEstrutura_", array, dados),
-				avLesao_: getList("avLesao_", array, dados),
-				avFase_: getList("avFase_", array, dados),
-				avCausa_: getList("avCausa_", array, dados),
+				avSegmento_: getList("avSegmento_", dados),
+				avLado_: getList("avLado_", dados),
+				avEstrutura_: getList("avEstrutura_", dados),
+				avLesao_: getList("avLesao_", dados),
+				avFase_: getList("avFase_", dados),
+				avCausa_: getList("avCausa_", dados),
 				caracteristica: dados.avCaractLesao,
 				obs: dados.obsReab == "" ? false : dados.obsReab,
 			}
@@ -555,17 +555,18 @@ function ortopedia(dados, profissional, view) {
 	return obj;
 }
 
-function getList(name, array, _return) {
+
+function getList(name, array) {
 	let html = document.createElement("UL");
 	let re, reII, valor;
 	let retorno = false;
-	let str = array + "";
+	let str = (Object.keys(array)).toString();
 	let regex = name + "\\d{1,2}\\b";
 	regex = new RegExp(regex, "g")
 	let objUm = str.match(regex);
 	if (objUm != null) {
 		for (let i = 0; i < objUm.length; i++) {
-			valor = _return[name + i];
+			valor = array[name + i];
 			if (valor !== "" && valor !== null && valor !== undefined) {
 				retorno = true;
 				let li = document.createElement("LI");
@@ -577,7 +578,7 @@ function getList(name, array, _return) {
 				if (objDois != null) {
 					let ulII = document.createElement("UL");
 					for (let j = 0; j < objDois.length; j++) {
-						valor = _return[name + i + "_" + j];
+						valor = array[name + i + "_" + j];
 						if (valor !== "" && valor !== null && valor !== undefined) {
 							let liII = document.createElement("LI");
 							liII.innerHTML = valor;
@@ -588,7 +589,7 @@ function getList(name, array, _return) {
 							if (objTres != null) {
 								let ulIII = document.createElement("UL");
 								for (let k = 0; k < objTres.length; k++) {
-									valor = _return[name + i + "_" + j + "_" + k]
+									valor = array[name + i + "_" + j + "_" + k]
 									if (valor !== "" && valor !== null && valor !== undefined) {
 										let liIII = document.createElement("LI");
 										liIII.innerHTML = valor;
